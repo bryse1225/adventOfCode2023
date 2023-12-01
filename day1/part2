@@ -1,0 +1,80 @@
+import os
+import sys
+# goal: read in a file of strings, create new numbers combining the first and second digit,(2, 3 = 23) and 
+# add all of those digits together. 
+
+# part 2:
+# spellings of digits also count as digits (ex. one = 1)
+
+# declare our total
+total = 0
+
+# declare our digit dictionary
+digits = {
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9"
+}
+
+
+# get our file
+path = os.path.join(os.path.dirname(__file__), "data")
+
+with open(path) as file:
+    for line in file:
+        firstNum = ""
+        lastNum = ""
+        line = line.strip()
+        # loop through and assign the first number
+        firstNumIndex = 0
+        for char in line:
+            if char.isnumeric():
+                firstNum = char
+                break
+            
+            firstNumIndex = firstNumIndex + 1
+
+
+        keyIndex = sys.maxsize
+        finalValue = ""
+        for key in digits.keys():
+            if (line.find(key) < keyIndex) and line.find(key) != -1:
+                finalValue = digits[key]
+                keyIndex = line.find(key)
+
+
+        if (keyIndex < firstNumIndex):
+                firstNum = finalValue
+
+        # reverse the string and look for the "first" number
+        lastNumIndex = len(line) - 1
+        for char in reversed(line):
+            if char.isnumeric():
+                lastNum = char
+                break
+        
+            lastNumIndex = lastNumIndex - 1
+
+        keyIndex = -sys.maxsize -1
+        finalValue = ""
+        for key in digits.keys():
+            if (line.rfind(key) > keyIndex) and line.rfind(key) != -1:
+                finalValue = digits[key]
+                keyIndex = line.rfind(key)
+
+        if (keyIndex > lastNumIndex):
+            lastNum = finalValue
+
+        total = total + int(firstNum + lastNum)
+        
+print("Total: " + str(total))
+                
+
+
+        

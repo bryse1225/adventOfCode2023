@@ -1,0 +1,32 @@
+import os
+# goal: read in a file of strings, create new numbers combining the first and second digit,(2, 3 = 23) and 
+# add all of those digits together. 
+
+# declare our total
+total = 0
+
+# get our file
+path = os.path.join(os.path.dirname(__file__), "data")
+
+with open(path) as file:
+    for line in file:
+        firstNum = ""
+        lastNum = ""
+        line = line.strip()
+        # loop through and assign the first number
+        for char in line:
+            if char.isnumeric():
+                firstNum = char
+                break
+        # reverse the string and look for the "first" number
+        for char in reversed(line):
+            if char.isnumeric():
+                lastNum = char
+                break
+        total = total + int(firstNum + lastNum)
+        
+print("Total: " + str(total))
+                
+
+
+        
