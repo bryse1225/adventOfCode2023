@@ -41,10 +41,12 @@ with open(path) as file:
             firstNumIndex = firstNumIndex + 1
 
 
+        # go through and find each instance of a key in our string, and then compare the first index to our number index. 
         keyIndex = sys.maxsize
         finalValue = ""
         for key in digits.keys():
-            if (line.find(key) < keyIndex) and line.find(key) != -1:
+            # find will return -1 if it finds nothing, so we want to ignore these cases. 
+            if (line.find(key) != -1 and (line.find(key) < keyIndex)):
                 finalValue = digits[key]
                 keyIndex = line.find(key)
 
@@ -61,16 +63,18 @@ with open(path) as file:
         
             lastNumIndex = lastNumIndex - 1
 
+        # go through and find each instance of a key in our string, and then compare the "first" index to our number index. 
         keyIndex = -sys.maxsize -1
         finalValue = ""
         for key in digits.keys():
-            if (line.rfind(key) > keyIndex) and line.rfind(key) != -1:
+            if line.rfind(key) != -1 and (line.rfind(key) > keyIndex):
                 finalValue = digits[key]
                 keyIndex = line.rfind(key)
 
         if (keyIndex > lastNumIndex):
             lastNum = finalValue
 
+        # convert to a number for addition and add to our total
         total = total + int(firstNum + lastNum)
         
 print("Total: " + str(total))
